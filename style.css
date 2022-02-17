@@ -1,8 +1,9 @@
 body, html {
                 margin: 0;
                 padding: 0;
-                background-color: #fff;*/
-                color: #444452;
+                background-color: #131417;
+                color: #afafbf;
+                scroll-behavior: smooth;
                 /*font-family: Apercu,Source Sans Pro,Helvetica,Arial,sans-serif;*/
                 line-height: 1.5;
                 scroll-behavior: smooth;
