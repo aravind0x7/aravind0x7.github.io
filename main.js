@@ -51,3 +51,4 @@ $('.project_used span').on({
         $(this).animate({opacity: 1});
     }
 });
+
