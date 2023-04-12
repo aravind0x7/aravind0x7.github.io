@@ -1,0 +1,34 @@
+#  Hii there! Why are you looking at this?
+#  Ok... , Its fine that you visited my site, and you know waht I have a surprise for you. Wanna know what? Then go ahead and mail me the secret code below, and make sure you
+#  donot disclose this to anyone.
+#  Secret Code: HACKER IN CROWD
+
+#  Mail me: gnanaaravind07@gmail.com
+
+#  All the best for your future. 
+
+User-agent: *
+Disallow: /
+
+# Just kidding! There's nothing here to see.
+# If you're looking for some top-secret information,
+# you might want to try searching for "Area 51" instead.
+# Or, you know, just go back to the home page.
+#
+# In the meantime, enjoy this ASCII art:
+#
+#            .-""""-.
+#           /        \
+#          /_        _\
+#         // \      / \\\\
+#         |\__\    /__/|
+#          \    ||    /
+#           \        /
+#            \  __  /
+#             '.__.'
+#              |  |
+#              |  |
+#              \  /
+#               \/
+#
+# Thanks for stopping by!

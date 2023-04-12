@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>404 Not Found</title>
+    <style>
+      /* Add some styling for the page */
+      body {
+        background-color: #222;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      h1 {
+        font-size: 3em;
+        margin-bottom: 0.5em;
+      }
+      p {
+        font-size: 1.5em;
+        margin-top: 0;
+      }
+      .terminal {
+        background-color: #000;
+        border: 1px solid #fff;
+        border-radius: 5px;
+        overflow: hidden;
+        width: 100%;
+        max-height: 500px;
+        margin: 1em 0;
+      }
+      .terminal .output {
+        padding: 1em;
+      }
+      .terminal .output .error {
+        color: #f00;
+      }
+      .terminal .input {
+        position: relative;
+        margin: 1em 0;
+      }
+      .terminal .input input {
+        background-color: #000;
+        border: none;
+        color: #fff;
+        font-family: monospace;
+        width: 100%;
+        padding: 0.5em;
+      }
+      .terminal .input input::placeholder {
+        color: #888;
+      }
+      .terminal .input::before {
+        content: "$";
+        position: absolute;
+        left: 0;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>404 Not Found</h1>
+      <p>The page you were looking for could not be found.</p>
+      <p>But don't worry, we've got you covered with some top-notch debugging skills!</p>
+      <div class="terminal">
+        <div class="output">
+          <p>Error: 404</p>
+          <p class="error">404 Not Found</p>
+          <p>The requested URL was not found on this server.</p>
+          <p>Let's try some troubleshooting:</p>
+          <p>1. Check the URL for typos.</p>
+          <p>2. Make sure the page you're looking for actually exists.</p>
+          <p>3. Consult the all-knowing Google.</p>
+          <p>4. If all else fails, try turning it off and on again.</p>
+          <p>5. If THAT doesn't work, just give up and go do something else.</p>
+          <p>Good luck!</p>
+        </div>
+        <div class="input">
+          <input type="text" placeholder="Enter a command..."
