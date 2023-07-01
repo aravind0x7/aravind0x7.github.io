@@ -1,1 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>404 - You Lost Somewhere</title>
+    <h1>404 Not Found</h1>
+      <p>The page you were looking for could not be found.</p>
+      <p>But don't worry, lets chill for sometime, enjoy the game!</p>
+      <br>
+      <br>
 
+    <style>
+        * {padding: 0; margin: 0;}
+        canvas {background: #eee; display: block; margin: 0 auto;}
+
+        body {
+        background-color: #ffffff;
+        color: #39c70d;
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      h1 {
+        font-size: 3em;
+        margin-bottom: 0.5em;
+      }
+      p {
+        font-size: 1.5em;
+        margin-top: 0;
+      }
+      .terminal {
+        background-color: #000;
+        border: 1px solid #fff;
+        border-radius: 5px;
+        overflow: hidden;
+        width: 100%;
+        max-height: 500px;
+        margin: 1em 0;
+      }
+      .terminal .output {
+        padding: 1em;
+      }
+      .terminal .output .error {
+        color: #f00;
+      }
+      .terminal .input {
+        position: relative;
+        margin: 1em 0;
+      }
+      .terminal .input input {
+        background-color: #000;
+        border: none;
+        color: #fff;
+        font-family: monospace;
+        width: 100%;
+        padding: 0.5em;
+      }
+      .terminal .input input::placeholder {
+        color: #888;
+      }
+      .terminal .input::before {
+        content: "$";
+        position: absolute;
+        left: 0;
+        color: #fff;
+      }
+    </style>
+  <title>404 Not Found</title>
+  <style>
+    @import 'https://fonts.googleapis.com/css?family=Inconsolata';
+
+html {
+  min-height: 100%;
+}
+
+body {
+  box-sizing: border-box;
+  height: 100%;
+  background-color: #000000;
+  background-image: radial-gradient(#11581E, #041607), url("https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Inconsolata', Helvetica, sans-serif;
+  font-size: 1.5rem;
+  color: rgba(128, 255, 128, 0.8);
+  text-shadow:
+      0 0 1ex rgba(51, 255, 51, 1),
+      0 0 2px rgba(255, 255, 255, 0.8);
+}
+
+.noise {
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+  opacity: .02;
+}
+
+.overlay {
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background:
+      repeating-linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0,
+      rgba(0, 0, 0, 0.3) 50%,
+      rgba(0, 0, 0, 0) 100%);
+  background-size: auto 4px;
+  z-index: 1;
+}
+
+.overlay::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+      0deg,
+      transparent 0%,
+      rgba(32, 128, 32, 0.2) 2%,
+      rgba(32, 128, 32, 0.8) 3%,
+      rgba(32, 128, 32, 0.2) 3%,
+      transparent 100%);
+  background-repeat: no-repeat;
+  animation: scan 7.5s linear 0s infinite;
+}
+
+@keyframes scan {
+  0%        { background-position: 0 -100vh; }
+  35%, 100% { background-position: 0 100vh; }
+}
+
+.terminal {
+  box-sizing: inherit;
+  position: absolute;
+  height: 100%;
+  width: 1000px;
+  max-width: 100%;
+  padding: 4rem;
+  text-transform: uppercase;
+}
+
+.output {
+  color: rgba(128, 255, 128, 0.8);
+  text-shadow:
+      0 0 1px rgba(51, 255, 51, 0.4),
+      0 0 2px rgba(255, 255, 255, 0.8);
+}
+
+.output::before {
+  content: "> ";
+}
+
+/*
+.input {
+  color: rgba(192, 255, 192, 0.8);
+  text-shadow:
+      0 0 1px rgba(51, 255, 51, 0.4),
+      0 0 2px rgba(255, 255, 255, 0.8);
+}
+.input::before {
+  content: "$ ";
+}
+*/
+
+a {
+  color: #fff;
+  text-decoration: none;
+}
+
+a::before {
+  content: "[";
+}
+
+a::after {
+  content: "]";
+}
+
+.errorcode {
+  color: white;
+}
+  </style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="480" height="320"></canvas>
+
+<script>
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+
+    var ballRadius = 10;
+
+    var x = canvas.width / 2;
+    var y = canvas.height - 30;
+
+    var dx = 2;
+    var dy = -2;
+
+    var paddleHeight = 10;
+    var paddleWidth = 75;
+    var paddleX = (canvas.width - paddleWidth) / 2;
+
+    var rightPressed = false;
+    var leftPressed = false;
+
+    var brickRowCount = 3;
+    var brickColumnCount = 5;
+    var brickWidth = 75;
+    var brickHeight = 20;
+    var brickPadding = 10;
+    var brickOffsetTop = 30;
+    var brickOffsetLeft = 30;
+
+    var bricks = [];
+    for (var c = 0; c < brickColumnCount; c++) {
+        bricks[c] = [];
+        for (var r = 0; r < brickRowCount; r++) {
+            bricks[c][r] = {x: 0, y: 0, status: 1};
+        }
+    }
+
+    var score = 0;
+    var bricksHit = 0;
+    var bricksHitPerLive = 0;
+    var lives = 3;
+
+    function drawBall() {
+        ctx.beginPath();
+        ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+        ctx.fillStyle = setRandomColor();
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function drawPaddle() {
+        ctx.beginPath();
+        ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function drawBricks() {
+        for (var c = 0; c < brickColumnCount; c++) {
+            for (var r = 0; r < brickRowCount; r++) {
+                if (bricks[c][r].status == 1) {
+                    var brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
+                    var brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
+                    bricks[c][r].x = brickX;
+                    bricks[c][r].y = brickY;
+                    ctx.beginPath();
+                    ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                    ctx.fillStyle = "#dd8c11";
+                    ctx.fill();
+                    ctx.closePath();
+                }
+            }
+        }
+    }
+
+    function drawScore() {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "#1a1a25";
+        ctx.fillText("Score: " + score, 8, 20)
+    }
+
+    function drawLives() {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "#1a1a25";
+        ctx.fillText("Lives: " + lives, canvas.width - 65, 20)
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        drawBricks();
+        drawPaddle();
+        drawBall();
+        drawScore();
+        drawLives();
+        collisionDetection();
+
+        if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+            dx = -dx;
+        }
+        if (y + dy < ballRadius + ballRadius) {
+            dy = -dy;
+        } else if (y + dy > canvas.height - ballRadius) {
+            if (x > paddleX && x < paddleX + paddleWidth && y + dy > canvas.height - paddleHeight * 2) {
+                dy = -dy - 0.2;
+            } else {
+                lives--;
+                bricksHitPerLive = 0;
+                if (!lives) {
+                    alert("GAME OVER");
+                    document.location.reload();
+                } else {
+                    x = canvas.width / 2;
+                    y = canvas.height - 30;
+                    dx = 2;
+                    dy = -2;
+                    paddleX = (canvas.width - paddleWidth) / 2;
+                }
+            }
+        }
+        x += dx;
+        y += dy;
+
+        if (rightPressed) {
+            paddleX += 5;
+            if (paddleX + paddleWidth > canvas.width) {
+                paddleX = canvas.width - paddleWidth;
+            }
+        } else if (leftPressed) {
+            paddleX -= 5;
+            if (paddleX < 0) {
+                paddleX = 0;
+            }
+        }
+        requestAnimationFrame(draw);
+    }
+
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+    document.addEventListener("mousemove", mouseMoveHandler, false)
+
+    function keyDownHandler(e) {
+
+        if (e.key == "Right" || e.key == "ArrowRight") {
+            rightPressed = true;
+        } else if (e.key == "Left" || e.key == "ArrowLeft") {
+            leftPressed = true;
+        }
+    }
+    function keyUpHandler(e) {
+
+        if (e.key == "Right" || e.key == "ArrowRight") {
+            rightPressed = false;
+        } else if (e.key == "Left" || e.key == "ArrowLeft") {
+            leftPressed = false;
+        }
+    }
+
+    function mouseMoveHandler(e) {
+        var relativeX = e.clientX - canvas.offsetLeft;
+        if (relativeX > 0 && relativeX < canvas.width) {
+            paddleX = relativeX - paddleWidth / 2;
+        }
+    }
+
+    draw();
+
+    function collisionDetection() {
+        for (var c = 0; c < brickColumnCount; c++) {
+            for (var r = 0; r < brickRowCount; r++) {
+                var b = bricks[c][r];
+                if (b.status == 1) {
+                    if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
+                        dy = -dy;
+                        b.status = 0;
+                        bricksHit++;
+                        bricksHitPerLive++;
+                        score += bricksHitPerLive;
+                        if (bricksHit == brickRowCount * brickColumnCount) {
+                            alert("YOU WIN, CONGRATULATIONS!\nYOU SCORED " + score + " POINTS.");
+                            document.location.reload();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    function setRandomColor() {
+        var randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+        return randomColor;
+    }
+
+
+</script>
+<div class="noise"></div>
+<div class="overlay"></div>
+<div class="terminal">
+  <h1>Error <span class="errorcode">404</span></h1>
+  <p class="output">The page you are looking for might have been removed, had its name changed or is temporarily unavailable.</p>
+  <p class="output">Try going back to <a href="https://aravind0x7.in">home</a> or <a href="game.html">enjoy a game</a>.</p>
+  <p class="output">Good luck.</p>
+</div>
+</body>
+</html>
